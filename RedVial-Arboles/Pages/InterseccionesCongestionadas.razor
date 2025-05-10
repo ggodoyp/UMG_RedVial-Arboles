@@ -1,0 +1,29 @@
+﻿@page "/interseccionescongestionadas"
+@using RedVial_Arboles.Services;
+@using RedVial_Arboles.Models;
+@inject Simulacion SimulacionService
+
+<h1>Intersecciones Congestionadas</h1>
+
+@if (interseccionesCongestionadas != null)
+{
+    <ul>
+        @foreach (var interseccion in interseccionesCongestionadas)
+        {
+            <li>@interseccion.nombreVia - Vehículos en Espera: @interseccion.cantidadVehiculosEspera</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Cargando...</p>
+}
+
+@code {
+    private List<Interseccion> interseccionesCongestionadas;
+
+    protected override async Task OnInitializedAsync()
+    {
+        interseccionesCongestionadas = await SimulacionService.IdentificarCongestion();
+    }
+}

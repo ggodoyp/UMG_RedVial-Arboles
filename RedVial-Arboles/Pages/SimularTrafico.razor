@@ -1,0 +1,141 @@
+﻿@page "/"
+@using RedVial_Arboles.Services;
+@using RedVial_Arboles.Models;
+@inject Simulacion SimulacionService
+
+<style>
+    .traffic-simulation-container {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        border: 1px solid #ccc;
+    }
+
+    .intersection {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: white;
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 10px;
+        text-align: center;
+        z-index: 2;
+    }
+
+    .horizontal-street {
+        position: absolute;
+        height: 10px;
+        background-color: yellow;
+        border: 1px solid black;
+        z-index: 1;
+    }
+
+    .vertical-street {
+        position: absolute;
+        width: 10px;
+        background-color: yellow;
+        border: 1px solid black;
+        z-index: 1;
+    }
+</style>
+
+<h1>Simular Tráfico</h1>
+
+<p>Haz clic en el botón para simular el tráfico.</p>
+
+<button class="btn btn-primary" @onclick="Simular_Trafico">Simular Tráfico</button>
+
+@if (interseccionesSimuladas != null)
+{
+    <h3>Resultados de la Simulación:</h3>
+    <ul>
+        @foreach (Interseccion interseccion in interseccionesSimuladas)
+        {
+            <li>@interseccion.nombreVia - Vehículos en Espera: @interseccion.cantidadVehiculosEspera</li>
+        }
+    </ul>
+}
+
+<div class="traffic-simulation-container">
+    @if (interseccionesSimuladas != null)
+    {
+        @for (int i = 0; i < interseccionesSimuladas.Count; i++)
+        {
+            var interseccion = interseccionesSimuladas[i];
+            int fila = i / columnas;
+            int col = i % columnas;
+            int top = fila * celda;
+            int left = col * celda;
+
+            // Dibuja la intersección
+            <div class="intersection" style="top:@($"{top}px"); left:@($"{left}px");">
+                @interseccion.nombreVia
+            </div>
+
+            // Dibuja calle horizontal hacia la derecha
+            if (col < columnas - 1 && i + 1 < interseccionesSimuladas.Count)
+            {
+                <div class="horizontal-street" style="
+                    top:@($"{top + 10}px");
+                    left:@($"{left + 30}px");
+                    width:@($"{celda - 30}px");
+                                        "></div>
+            }
+
+            // Dibuja calle vertical hacia abajo
+            if (fila < filas - 1 && i + columnas < interseccionesSimuladas.Count)
+            {
+                <div class="vertical-street" style="
+                    top:@($"{top + 30}px");
+                    left:@($"{left + 10}px");
+                    height:@($"{celda - 30}px");"></div>
+            }
+        }
+    }
+    else
+    {
+        <p>Cargando...</p>
+    }
+</div>
+
+<h1>@mensaje</h1>
+
+@code {
+    private List<Interseccion>? interseccionesSimuladas;
+    private string mensaje = "";
+
+    private int columnas = 3;
+    private int celda = 120;
+    private int filas => (int)Math.Ceiling((double)(interseccionesSimuladas?.Count ?? 0) / columnas);
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     await CargarIntersecciones();
+    // }
+
+    private async Task Simular_Trafico()
+    {
+        await CargarIntersecciones();
+    }
+
+    private async Task CargarIntersecciones()
+    {
+        try
+        {
+            interseccionesSimuladas = await SimulacionService.SimularFlujoVehicular();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar intersecciones: {ex.Message}");
+            mensaje = "Error al cargar intersecciones";
+        }
+        finally
+        {
+            StateHasChanged();
+        }
+    }
+}

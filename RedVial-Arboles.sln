@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedVial_Arboles", "RedVial-Arboles\RedVial_Arboles.csproj", "{5B54C52A-AEF4-480A-92CA-803CE1B0CD58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedVial_API", "RedVial_API\RedVial_API.csproj", "{B17F4186-09EC-4183-A3A5-E8391DB964BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B54C52A-AEF4-480A-92CA-803CE1B0CD58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B54C52A-AEF4-480A-92CA-803CE1B0CD58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B54C52A-AEF4-480A-92CA-803CE1B0CD58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B54C52A-AEF4-480A-92CA-803CE1B0CD58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B17F4186-09EC-4183-A3A5-E8391DB964BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B17F4186-09EC-4183-A3A5-E8391DB964BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B17F4186-09EC-4183-A3A5-E8391DB964BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B17F4186-09EC-4183-A3A5-E8391DB964BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BCAFDE73-2F2C-45F1-A330-AA225DFF43F1}
+	EndGlobalSection
+EndGlobal
